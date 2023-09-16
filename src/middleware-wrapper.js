@@ -18,7 +18,8 @@ const middlewareWrapper = config => {
         if (req.path === validatedConfig.path) {
             const data = {
                 script: fs.readFileSync(path.join(__dirname, '/public/script.js')),
-                style: fs.readFileSync(path.join(__dirname, '/public/style.css'))
+                style: fs.readFileSync(path.join(__dirname, '/public/style.css')),
+                style_reset: fs.readFileSync(path.join(__dirname, '/public/reset.css'))
               }
 
             res.setHeader('Content-Type', 'text/html')
