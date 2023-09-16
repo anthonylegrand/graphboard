@@ -22,16 +22,16 @@ Create your own statistics for your dashboard.
 ```
 2. If you use express add middleware
 ```javascript
-    const express = require("express");
-    const app = express();
+    const express = require("express")
+    const app = express()
 
     // Add this line before all other middleware
     const graphboard = require('graphboard')
-    app.use(graphboard.middleware());
+    app.use(graphboard.middleware())
 
     app.listen(80, () => {
-        console.log(`Express server is running : http://localhost/`);
-    });
+        console.log(`Express server is running : http://localhost/`)
+    })
 ```
 3. Visit http://ServerIP/graphboard
 
@@ -49,7 +49,7 @@ You can change the default configuration:
     // Exemple 1
     graphboard.server(config)
     // Exemple 2
-    app.use(graphboard.middleware(config));
+    app.use(graphboard.middleware(config))
 ```
 
 Default config:

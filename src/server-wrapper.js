@@ -1,13 +1,15 @@
+const express = require("express")
+
 const validate = require('./utils/validate')
+const middleware = require('./middleware-wrapper')
 
 const serverWrapper = config => {
     const validatedConfig = validate(config)
 
-    const server = () => {
+    const app = express()
+    app.use(middleware())
 
-    }
-
-    return server
+    app.listen(validatedConfig.port)
 }
 
 module.exports = serverWrapper

@@ -1,8 +1,8 @@
-const defaultConfig = require('./default-config');
+const defaultConfig = require('./default-config')
 
 module.exports = config => {
     if (!config) 
-      return defaultConfig;
+      return defaultConfig
 
     if(typeof config.path !== 'string')
         if(config.path.startsWith('/'))
