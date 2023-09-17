@@ -1,5 +1,5 @@
 {
-  "name": "graphboard",
+  "name": "graphsboard",
   "version": "0.0.1",
   "description": "Real-time dashboard hosted locally",
   "main": "index.js",
@@ -15,9 +15,6 @@
     "node": ">=8"
   },
   "author": "bowender",
-  "contributors": [
-    "pandowlive"
-  ],
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",

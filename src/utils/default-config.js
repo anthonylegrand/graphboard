@@ -1,5 +1,5 @@
 module.exports = {
-    path: '/graphboard',
+    path: '/graphsboard',
     ignorePaths: [ '/public', '/admin' ],
     port: 80,
 }

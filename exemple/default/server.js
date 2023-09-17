@@ -1,2 +1,2 @@
-const graphboard = require('./../../')
-graphboard.server()
+const graphsboard = require('./../../')
+graphsboard.server()

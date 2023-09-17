@@ -1,8 +1,8 @@
 const express = require("express")
 const app = express()
-const graphboard = require('./../../')
+const graphsboard = require('./../../')
 
-app.use(graphboard.middleware())
+app.use(graphsboard.middleware())
 
 app.listen(80, () => {
     console.log(`Express server is running : http://localhost/`)

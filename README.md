@@ -1,5 +1,5 @@
-[![graphboard on npm](https://img.shields.io/npm/v/graphboard.svg)](https://www.npmjs.com/package/graphboard)
-[![npm](https://img.shields.io/npm/dt/graphboard.svg)](https://img.shields.io/npm/dt/graphboard.svg)
+[![graphsboard on npm](https://img.shields.io/npm/v/graphsboard.svg)](https://www.npmjs.com/package/graphsboard)
+[![npm](https://img.shields.io/npm/dt/graphsboard.svg)](https://img.shields.io/npm/dt/graphsboard.svg)
 
 ## Development in progress
 ```
@@ -13,12 +13,12 @@ Create your own statistics for your dashboard.
 ## Installation & setup
 1. Run 
 ```shell
-    npm i graphboard --save
+    npm i graphsboard --save
 ```
 2. If you don't use express
 ```javascript
-    const graphboard = require('graphboard')
-    graphboard.server()
+    const graphsboard = require('graphsboard')
+    graphsboard.server()
 ```
 2. If you use express add middleware
 ```javascript
@@ -26,14 +26,14 @@ Create your own statistics for your dashboard.
     const app = express()
 
     // Add this line before all other middleware
-    const graphboard = require('graphboard')
-    app.use(graphboard.middleware())
+    const graphsboard = require('graphsboard')
+    app.use(graphsboard.middleware())
 
     app.listen(80, () => {
         console.log(`Express server is running : http://localhost/`)
     })
 ```
-3. Visit http://ServerIP/graphboard
+3. Visit http://ServerIP/graphsboard
 
 Note: This plugin works on Node versions > 4.x
 
@@ -47,14 +47,14 @@ You can change the default configuration:
     }
     
     // Exemple 1
-    graphboard.server(config)
+    graphsboard.server(config)
     // Exemple 2
-    app.use(graphboard.middleware(config))
+    app.use(graphsboard.middleware(config))
 ```
 
 Default config:
 ```javascript
-    path: '/graphboard',
+    path: '/graphsboard',
     ignorePaths: [ '/public', '/admin' ],
     port: 80,
 ```
@@ -68,15 +68,15 @@ Recovered Data:
 Simply add new graphics and data
 
 ```javascript
-    const graphboard = require('graphboard')
-    const graph = graphboard.graph('Total Users', {
+    const graphsboard = require('graphsboard')
+    const graph = graphsboard.graph('Total Users', {
         type: 'courbe', // Default: 'courbe' - List : ['courbe', 'stick', '...']
         absolute: true
     })
     graph.increment()
 
     let pingValue = 800
-    const graph = graphboard.graph('Average Ping ', {
+    const graph = graphsboard.graph('Average Ping ', {
         type: 'courbe'
         min: 0,
         max: 1000

@@ -8,7 +8,7 @@ module.exports = config => {
         if(config.path.startsWith('/'))
             config.path = defaultConfig.path
         else
-            throw "The path value in the 'graphboard' config must begin with /"
+            throw "The path value in the 'graphsboard' config must begin with /"
     
     if(!Array.isArray(config.ignorePaths))
         config.ignorePaths = defaultConfig.ignorePaths
