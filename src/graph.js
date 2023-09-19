@@ -1,5 +1,6 @@
-const fs = require('fs')
 const path = require('path')
+
+const GraphValue = require('./utils/GraphValue')
 
 const ABSOLUTE_PATH = __dirname.includes('node_modules') 
                         ? path.normalize(__dirname.split('node_modules')[0]) 
@@ -8,38 +9,34 @@ const ABSOLUTE_PATH = __dirname.includes('node_modules')
 class Graph{
     constructor(title, options = {}){
         this.title = title
-        this.options = validOptions(options)
-        
-        this.filePath = path.join(ABSOLUTE_PATH, 'graphsboard', this.title.replaceAll(' ', '_')+'.json')
-        this._writeFile()
+        this.filePath = path.join(ABSOLUTE_PATH, 'graphsboard', title.replaceAll(' ', '_')+'.json')
+        this.timeout = null
+
+        this.GraphValue = new GraphValue(title, this.filePath, validOptions(options))
     }
 
     increment(value = 1){
-        
+        this.GraphValue.increment(value)
+        this._writeFile()
     }
 
     decrement(value = 1){
-        
+        this.GraphValue.increment(value*-1)
+        this._writeFile()
     }
 
     set(value = 0){
-
-    }
-
-    get(){
-
-    }
-
-    _setValue(){
-        
+        if(!value) return
+        this.GraphValue.set(value)
+        this._writeFile()
     }
 
     _writeFile(){
-        const dirname = path.dirname(this.filePath)
-        if(!fs.existsSync(dirname))
-            fs.mkdirSync(dirname, { recursive: true })
-
-        fs.writeFileSync(this.filePath, JSON.stringify({}))
+        if(this.timeout === null)
+            this.timeout = setTimeout(()=>{
+                this.timeout = null
+                this.GraphValue.writeFile()
+            }, 1000+Math.trunc(Date.now()%1000))
     }
 }
 
@@ -49,6 +46,12 @@ const validOptions = options => {
 
     if(!['line', 'bar', 'polararea', 'doughnut', 'radar'].includes(options.type))
         options.type = 'line'
+
+    if(options.min === undefined)
+        options.min = 0
+
+    if(options.max === undefined)
+        options.max = 0
 
     return options
 }

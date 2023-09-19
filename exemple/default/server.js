@@ -1,7 +1,7 @@
 const graphsboard = require('./../../')
 graphsboard.server()
 
-const graph = graphsboard.graph('Total Users', {
+const graph = graphsboard.Graph('Total Users', {
     type: 'line',
     absolute: true
 })
