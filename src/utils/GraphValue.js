@@ -11,13 +11,13 @@ module.exports = class GraphValue{
             Object.assign(this, global.GraphsValue[graphTitle])
         else{
             this.graphTitle = graphTitle
-            this.options = options
             this.filePath = filePath
 
             const JSON_FILE = fs.existsSync(filePath) 
                                 ? JSON.parse(fs.readFileSync(filePath)) 
                                 : {}
             
+            this.options = JSON_FILE?.options || options
             if(this.options.absolute)
                 this.absoluteValue = JSON_FILE?.absoluteValue || 0
             this.values = JSON_FILE?.values || {}
@@ -52,20 +52,14 @@ module.exports = class GraphValue{
         return this.values[filter+'-'+this._getCurrentDate(filter)] || defaultvalue || 0
     }
 
+    getJson(){
+        this._clean()
+        return { options: this.options, value: this.values }
+    }
+
     _clean(){
         let filtered = {}
         Object.keys(this.values)
-        .sort((a, b) => {
-            const keys_a = a.split('-')
-            const keys_b = b.split('-')
-
-            if(timesType.indexOf(keys_a[0]) < timesType.indexOf(keys_b[0]))
-                return -1
-            else if(timesType.indexOf(keys_a[0]) > timesType.indexOf(keys_b[0]))
-                return 1
-            else 
-                return keys_b[1] - keys_a[1];
-        })
         .map(el => {
             const keys = el.split('-')
 

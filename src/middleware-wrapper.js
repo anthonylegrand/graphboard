@@ -4,6 +4,7 @@ const Handlebars = require('handlebars')
 
 const validate = require('./utils/validate')
 const utils = require('./utils/utils')
+const Graph = require('./Graph')
 
 require('./utils/checkUpdate')
 
@@ -16,15 +17,24 @@ const middlewareWrapper = config => {
     const middleware = (req, res, next) => {
         // Send Dashboard
         if (req.path === validatedConfig.path) {
-            const data = {
-                script: fs.readFileSync(path.join(__dirname, '/public/script.js')),
-                style: fs.readFileSync(path.join(__dirname, '/public/style.css')),
-                style_reset: fs.readFileSync(path.join(__dirname, '/public/reset.css'))
-              }
-
-            res.setHeader('Content-Type', 'text/html')
-            res.send(render(data))
-            return
+            if(req.method === 'GET'){
+                const data = {
+                    script: fs.readFileSync(path.join(__dirname, '/public/script.js')),
+                    style: fs.readFileSync(path.join(__dirname, '/public/style.css')),
+                    style_reset: fs.readFileSync(path.join(__dirname, '/public/reset.css'))
+                  }
+    
+                res.setHeader('Content-Type', 'text/html')
+                res.send(render(data))
+                return
+            }else if(req.method === 'POST'){
+                let result = {}
+                Graph.graphsList().map(graph => {
+                    const graphTitle = graph.replace('.json', '')
+                    result[graphTitle] = Graph(graphTitle).GraphValue.getJson()
+                })
+                res.json(result)
+            }
         }else if(!utils.pathContains(validatedConfig.ignorePaths, req.path)){
             
         }

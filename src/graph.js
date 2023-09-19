@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 
 const GraphValue = require('./utils/GraphValue')
@@ -47,12 +48,6 @@ const validOptions = options => {
     if(!['line', 'bar', 'polararea', 'doughnut', 'radar'].includes(options.type))
         options.type = 'line'
 
-    if(options.min === undefined)
-        options.min = 0
-
-    if(options.max === undefined)
-        options.max = 0
-
     return options
 }
 
@@ -62,4 +57,8 @@ const validOptions = options => {
 */
 module.exports = (title, options) => {
     return new Graph(title, options)
+}
+
+module.exports.graphsList = () => {
+    return fs.readdirSync(path.join(ABSOLUTE_PATH, 'graphsboard'))
 }
