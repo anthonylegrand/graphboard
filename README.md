@@ -70,14 +70,14 @@ Simply add new graphics and data
 ```javascript
     const graphsboard = require('graphsboard')
     const graph = graphsboard.graph('Total Users', {
-        type: 'courbe', // Default: 'courbe' - List : ['courbe', 'stick', '...']
+        type: 'line', // Default: 'line' - List : ['line', 'bar', 'polararea', 'doughnut', 'radar']
         absolute: true
     })
     graph.increment()
 
     let pingValue = 800
     const graph = graphsboard.graph('Average Ping ', {
-        type: 'courbe'
+        type: 'line'
         min: 0,
         max: 1000
     })
@@ -85,8 +85,8 @@ Simply add new graphics and data
 ```
 Graph options :
 - `type`: Change graph display type
-    - **default**: "courbe"
-    - **options**: [ "courbe", "stick", "donuts" ]
+    - **default**: "line"
+    - **options**: [ 'line', 'bar', 'polararea', 'doughnut', 'radar' ]
 - `absolute`: Does the value continue to increment infinitely? Or does it return to 0 every new minute?
     - **default**: false
 - `min`: Set a minimum value for graph display

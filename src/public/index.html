@@ -28,7 +28,18 @@
 
         <section>
             <!-- JS Generation -->
-            <h2>Statistiques</h2>
+            <div class="container jc-sb ai-center">
+                <h2>Statistiques</h2>
+                <form>
+                    <label for="time-select">Display graphiques :</label>
+                    <select name="time-select" id="time-select">
+                        <option value="1m">Last minutes</option>
+                        <option value="1m">Last hour</option>
+                        <option value="1m">Last day</option>
+                        <option value="1m">Last month</option>
+                    </select>
+                </form>
+            </div>
             <div id="charts_list">
                 <article>
                     <header>
