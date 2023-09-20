@@ -7,9 +7,12 @@ const ABSOLUTE_PATH = __dirname.includes('node_modules')
                         ? path.normalize(__dirname.split('node_modules')[0]) 
                         : path.join(__dirname, '../')
 
+if(!global.instances)
+    global.instances = []
+
 class Graph{
     constructor(title, options = {}){
-        const existingInstance = Graph.instances.find(instance => instance.title === title);
+        const existingInstance = global.instances.find(instance => instance.infos.title === title);
         if(existingInstance)
             return existingInstance
 
@@ -22,7 +25,7 @@ class Graph{
         if(this.options.absolute)
             this.absolutValues = FILE_READ?.absolutValues
 
-        Graph.instances.push(this);
+        global.instances.push(this);
         return this
     }
 
@@ -39,6 +42,10 @@ class Graph{
         this._writeFile()
     }
 
+    getJSON(){
+        return { infos: this.infos.all, options: this.options, absolutValues: this.absolutValues, data: this.data }
+    }
+
     destroy(){
         Graph.instances.filter(instance => instance.title != this.infos.title);
     }
@@ -50,16 +57,16 @@ class Graph{
         if(!fs.existsSync(dirname))
             fs.mkdirSync(dirname, { recursive: true })
 
-        let writeJson = {}
-        Object.keys(this.data).map(key => {
-            if(!key.startsWith('s'))
-                writeJson[key] = this.data[key]
-        })
-
         this.timeout = setTimeout(() => {
-            fs.writeFileSync(this._getFilePath(), JSON.stringify({ infos: this.infos.all, options: this.options, absolutValues: this.absolutValues, data: writeJson }))
+            let writeJson = {}
+            Object.keys(this.data).map(key => {
+                if(!key.startsWith('s'))
+                    writeJson[key] = this.data[key]
+            })
+
+            fs.writeFileSync(this._getFilePath(), JSON.stringify({ ...this.getJSON(), data: writeJson }))
             this.timeout = undefined
-        }, 1000);
+        }, 2500);
     }
 
     _readFile(){
@@ -72,7 +79,7 @@ class Graph{
         return path.join(ABSOLUTE_PATH, 'graphsboard', this.infos.title.replaceAll(' ', '_')+'.json')
     }
 
-    _validOptions = options => {
+    _validOptions(options){
         if(options.absolute === undefined)
             options.absolute = false
     
@@ -82,8 +89,6 @@ class Graph{
         return options
     }
 }
-
-Graph.instances = []
 
 /**
  * @param {string} title The date

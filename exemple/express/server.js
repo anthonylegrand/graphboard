@@ -11,11 +11,11 @@ const graph = graphsboard.Graph('Total Users', {
 
 app.get('/register', (req, res) => {
     graph.add({user: 1})
-    res.status(200).json({ result: true })
+    res.status(200).json({ result: Math.random() })
 })
 
 app.get('/error', (req, res) => {
-    res.status(404).json({ result: true })
+    res.status(404).json({ result: Math.random() })
 })
 
 app.listen(81, () => {
