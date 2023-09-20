@@ -18,5 +18,8 @@ module.exports = config => {
     if(typeof config.port !== 'numeric')
         config.port = defaultConfig.port
 
+    if(config.expressGraph === undefined)
+        config.expressGraph = defaultConfig.expressGraph
+
     return config
 }

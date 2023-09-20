@@ -7,7 +7,7 @@ const serverWrapper = config => {
     const validatedConfig = validate(config)
 
     const app = express()
-    app.use(middleware())
+    app.use(middleware({ expressGraph: false }))
 
     app.listen(validatedConfig.port)
 }

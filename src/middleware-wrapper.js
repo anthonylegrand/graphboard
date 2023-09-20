@@ -28,15 +28,18 @@ const middlewareWrapper = config => {
                 res.send(render(data))
                 return
             }else if(req.method === 'POST'){
-                let result = {}
-                Graph.graphsList().map(graph => {
-                    const graphTitle = graph.replace('.json', '')
-                    result[graphTitle] = Graph(graphTitle).GraphValue.getJson()
-                })
-                res.json(result)
+                // let result = {}
+                // Graph.graphsList().map(graph => {
+                //     const graphTitle = graph.replace('.json', '')
+                //     result[graphTitle] = Graph(graphTitle).GraphTime.getJson()
+                // })
+                // res.json(result)
             }
-        }else if(!utils.pathContains(validatedConfig.ignorePaths, req.path)){
-            
+        }else if(validatedConfig.expressGraph && !utils.pathContains(validatedConfig.ignorePaths, req.path)){
+            const Express_Graph = Graph('Express Requests')
+            Express_Graph.add({total: 1})
+            // use https://www.npmjs.com/package/on-headers
+            res.on("finish",()=> Express_Graph.add({answered: 1})) // , [res.statusCode]: 1
         }
         
         next()

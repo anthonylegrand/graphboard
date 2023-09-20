@@ -8,20 +8,14 @@ const graph = graphsboard.Graph('Total Users', {
     type: 'line',
     absolute: true
 })
-const graph1 = graphsboard.Graph('Requests', {
-    type: 'line'
-})
 
 app.get('/register', (req, res) => {
-    graph.increment()
-    graph1.increment()
-    res.json({ result: true })
+    graph.add({user: 1})
+    res.status(200).json({ result: true })
 })
 
-app.get('/set/:val', (req, res) => {
-    graph.set(req.params.val)
-    graph1.set(req.params.val)
-    res.json({ result: true })
+app.get('/error', (req, res) => {
+    res.status(404).json({ result: true })
 })
 
 app.listen(81, () => {

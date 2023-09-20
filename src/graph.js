@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const GraphValue = require('./utils/GraphValue')
+const {GraphTime, GraphData} = require('./utils/GraphTime')
 
 const ABSOLUTE_PATH = __dirname.includes('node_modules') 
                         ? path.normalize(__dirname.split('node_modules')[0]) 
@@ -9,47 +9,81 @@ const ABSOLUTE_PATH = __dirname.includes('node_modules')
 
 class Graph{
     constructor(title, options = {}){
-        this.title = title
-        this.filePath = path.join(ABSOLUTE_PATH, 'graphsboard', title.replaceAll(' ', '_')+'.json')
-        this.timeout = null
+        const existingInstance = Graph.instances.find(instance => instance.title === title);
+        if(existingInstance)
+            return existingInstance
 
-        this.GraphValue = new GraphValue(title, this.filePath, validOptions(options))
+        this.infos = { title, displaySize: 1 }
+        this.options = this._validOptions(options)
+
+        const FILE_READ = this._readFile()
+        this.data = FILE_READ?.data || {}
+
+        if(this.options.absolute)
+            this.absolutValues = FILE_READ?.absolutValues
+
+        Graph.instances.push(this);
+        return this
     }
 
-    increment(value = 1){
-        this.GraphValue.increment(value)
+    add(newData = {}){
+        if(typeof newData !== 'object' || Array.isArray(newData)) throw 'Added data format cannot be added to chart'
+        this.data = new GraphTime(this.data, this.absolutValues || {})
+                        .setAbsolute(this.options.absolute)
+                        .add(newData)
+                        .getResult()
+
+        if(this.options.absolute)
+            this.absolutValues = new GraphData(this.absolutValues).add(newData).getJson()
+            
         this._writeFile()
     }
 
-    decrement(value = 1){
-        this.GraphValue.increment(value*-1)
-        this._writeFile()
-    }
-
-    set(value = 0){
-        if(!value) return
-        this.GraphValue.set(value)
-        this._writeFile()
+    destroy(){
+        Graph.instances.filter(instance => instance.title != this.infos.title);
     }
 
     _writeFile(){
-        if(this.timeout === null)
-            this.timeout = setTimeout(()=>{
-                this.timeout = null
-                this.GraphValue.writeFile()
-            }, 1000+Math.trunc(Date.now()%1000))
+        if(this.timeout !== undefined) return
+
+        const dirname = path.dirname(this._getFilePath())
+        if(!fs.existsSync(dirname))
+            fs.mkdirSync(dirname, { recursive: true })
+
+        let writeJson = {}
+        Object.keys(this.data).map(key => {
+            if(!key.startsWith('s'))
+                writeJson[key] = this.data[key]
+        })
+
+        this.timeout = setTimeout(() => {
+            fs.writeFileSync(this._getFilePath(), JSON.stringify({ infos: this.infos.all, options: this.options, absolutValues: this.absolutValues, data: writeJson }))
+            this.timeout = undefined
+        }, 1000);
+    }
+
+    _readFile(){
+        if(fs.existsSync( this._getFilePath() ))
+            return JSON.parse( fs.readFileSync(this._getFilePath()) ) || {}
+        return {}
+    }
+
+    _getFilePath(){
+        return path.join(ABSOLUTE_PATH, 'graphsboard', this.infos.title.replaceAll(' ', '_')+'.json')
+    }
+
+    _validOptions = options => {
+        if(options.absolute === undefined)
+            options.absolute = false
+    
+        if(!['line', 'bar', 'polararea', 'doughnut', 'radar'].includes(options.type))
+            options.type = 'line'
+    
+        return options
     }
 }
 
-const validOptions = options => {
-    if(options.absolute === undefined)
-        options.absolute = false
-
-    if(!['line', 'bar', 'polararea', 'doughnut', 'radar'].includes(options.type))
-        options.type = 'line'
-
-    return options
-}
+Graph.instances = []
 
 /**
  * @param {string} title The date

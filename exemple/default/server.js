@@ -5,4 +5,4 @@ const graph = graphsboard.Graph('Total Users', {
     type: 'line',
     absolute: true
 })
-graph.increment()
+graph.add({user: 1})

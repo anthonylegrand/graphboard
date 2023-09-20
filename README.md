@@ -73,15 +73,7 @@ Simply add new graphics and data
         type: 'line', // Default: 'line' - List : ['line', 'bar', 'polararea', 'doughnut', 'radar']
         absolute: true
     })
-    graph.increment()
-
-    let pingValue = 800
-    const graph = graphsboard.graph('Average Ping ', {
-        type: 'line'
-        min: 0,
-        max: 1000
-    })
-    graph.set(pingValue)
+    graph.add({user: 1})
 ```
 Graph options :
 - `type`: Change graph display type
