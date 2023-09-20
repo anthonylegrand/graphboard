@@ -7,25 +7,19 @@ const ABSOLUTE_PATH = __dirname.includes('node_modules')
                         ? path.normalize(__dirname.split('node_modules')[0]) 
                         : path.join(__dirname, '../')
 
-if(!global.instances)
-    global.instances = []
+let instances = []
 
 class Graph{
     constructor(title, options = {}){
-        const existingInstance = global.instances.find(instance => instance.infos.title === title);
+        const existingInstance = instances.find(instance => instance.infos.title === title);
         if(existingInstance)
             return existingInstance
 
         this.infos = { title, displaySize: 1 }
         this.options = this._validOptions(options)
+        this._readFile()
 
-        const FILE_READ = this._readFile()
-        this.data = FILE_READ?.data || {}
-
-        if(this.options.absolute)
-            this.absolutValues = FILE_READ?.absolutValues
-
-        global.instances.push(this);
+        instances.push(this);
         return this
     }
 
@@ -46,10 +40,6 @@ class Graph{
         return { infos: this.infos.all, options: this.options, absolutValues: this.absolutValues, data: this.data }
     }
 
-    destroy(){
-        Graph.instances.filter(instance => instance.title != this.infos.title);
-    }
-
     _writeFile(){
         if(this.timeout !== undefined) return
 
@@ -66,13 +56,20 @@ class Graph{
 
             fs.writeFileSync(this._getFilePath(), JSON.stringify({ ...this.getJSON(), data: writeJson }))
             this.timeout = undefined
-        }, 2500);
+        }, 2000);
     }
 
     _readFile(){
+        let file = {}
         if(fs.existsSync( this._getFilePath() ))
-            return JSON.parse( fs.readFileSync(this._getFilePath()) ) || {}
-        return {}
+            file = JSON.parse( fs.readFileSync(this._getFilePath()) )
+        
+        this.data = file?.data || {}
+
+        if(this.options.absolute)
+            this.absolutValues = file?.absolutValues
+        
+        return this
     }
 
     _getFilePath(){

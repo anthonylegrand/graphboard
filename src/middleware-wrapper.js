@@ -31,18 +31,19 @@ const middlewareWrapper = config => {
                 let result = {}
                 Graph.graphsList().map(graph => {
                     const graphTitle = graph.replace('.json', '')
-                    result[graphTitle] = Graph(graphTitle).getJSON()
-
+                    result[graphTitle] = Graph(graphTitle)._readFile().getJSON()
                 })
                 res.json(result)
             }
         }else if(validatedConfig.expressGraph && !utils.pathContains(validatedConfig.ignorePaths, req.path)){
             const Express_Graph = Graph('Express Requests')
-            Express_Graph.add({total: 1})
+            Express_Graph.add({incoming: 1})
 
-            res.on("finish", () => 
-                Express_Graph.add({ answered: 1, [res.statusCode]: 1 })
-            )
+            res.on("finish", () => {
+                if(res.getHeader('x-content-type-options') === undefined)
+                    Express_Graph.add({ answered: 1 })
+                Express_Graph.add({ [res.statusCode]: 1 })
+            })
         }
         
         next()

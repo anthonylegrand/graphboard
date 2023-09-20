@@ -7,7 +7,7 @@ fetch('https://registry.npmjs.org/'+pjson.name)
     if(pjson.version === json['dist-tags']?.development) return
 
     console.log(' ')
-    console.log('------------------[RestAPI_Dashboard]------------------')
+    console.log('------------------['+pjson.name+']------------------')
     console.log('You\'re not using the last version')
     console.log('Do "npm update '+pjson.name+'" to get the new features')
     console.log('------------------------------------------------------')

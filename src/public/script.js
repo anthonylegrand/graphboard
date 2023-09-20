@@ -1,19 +1,27 @@
+const charts_list = document.getElementById('charts_list')
+const timesType = [{k: 's', v: 60, d: 1000}, {k: 'm', v: 60, d: 60_000}, {k: 'h', v: 24, d: 1_440_000}, {k: 'd', v: 31, d: 44_640_000}]
+
 window.onload = () => {
+    fetchGraphs()
+
+    document.getElementById('time-select')
+        .addEventListener('change', () => fetchGraphs())
+}
+
+function fetchGraphs(){
     fetch('', {
         method: 'POST'
     })
     .then(res => res.json())
     .then(graphsList => {
+        charts_list.innerHTML = ''
         Object.keys(graphsList).map(el => 
             createGraphElement(el, graphsList[el])    
         )
-        
     })
 }
 
-const charts_list = document.getElementById('charts_list')
 function createGraphElement(key, json){
-    console.log(key, json)
     const article = createElement('article')
 
     const header = createElement('header')
@@ -23,6 +31,8 @@ function createGraphElement(key, json){
     const header_div_div_i = createElement('i', [{innerHTML: '+105%'}])
     const header_div_p = createElement('p', [{innerHTML: 'option'}])
     const label = createElement('label', [{innerHTML: key.replaceAll('_', ' ')}])
+    
+    const canvas = createElement('canvas', [{ id: 'chart-'+key }])
 
     article.appendChild(header)
     header.appendChild(header_div)
@@ -32,7 +42,11 @@ function createGraphElement(key, json){
     header_div.appendChild(header_div_p)
     header.appendChild(label)
 
+    article.appendChild(canvas)
+
     charts_list.appendChild(article)
+
+    createChart(key, json)
 }
 
 function createElement(element, attributes = []){
@@ -44,4 +58,45 @@ function createElement(element, attributes = []){
             elem.setAttribute(Object.keys(attri)[0], attri[Object.keys(attri)[0]])
     })
     return elem
+}
+
+function createChart(key, json){
+    return console.log(formatData(json.data))
+
+    const ctx = document.getElementById('chart-'+key);
+    new Chart(ctx, {
+        type: json.options.type || 'line',
+        data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: formatData(json.data)
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+function formatData(data){
+    const selectedTime = document.getElementById('time-select').value
+    const timeType = timesType.find(time => time.k === selectedTime)
+    let time = Math.trunc(Date.now()/timeType.d)
+
+    const datas = []
+    
+    for(let i = 0;i<timeType.v;i++){
+        console.log(timeType.k+'-'+(time-i), data[timeType.k+'-'+(time-i)], i)
+    }
+    
+    return datas
+
+
+    // {
+    //     label: 'of Votes',
+    //     data: [12, 19, 3, 5, 2, 3],
+    //     borderWidth: 1
+    // }
 }

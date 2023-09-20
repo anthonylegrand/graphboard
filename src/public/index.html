@@ -33,10 +33,9 @@
                 <form>
                     <label for="time-select">Display graphiques :</label>
                     <select name="time-select" id="time-select">
-                        <option value="1m">Last minutes</option>
-                        <option value="1m">Last hour</option>
-                        <option value="1m">Last day</option>
-                        <option value="1m">Last month</option>
+                        <option value="m">Last minutes</option>
+                        <option value="h">Last hour</option>
+                        <option value="d">Last day</option>
                     </select>
                 </form>
             </div>
@@ -108,6 +107,7 @@
         </div>
     </nav>
       
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>{{{script}}}</script>
 </body>
 </html>
