@@ -84,6 +84,8 @@ Graph options :
     - **options**: [ 'line', 'bar', 'polararea', 'doughnut', 'radar' ]
 - `absolute`: Does the value continue to increment infinitely? Or does it return to 0 every new minute?
     - **default**: false
+- `avrg`: Calculate the average of inserted data
+    - **Exemple**: Average query response time
 - `min`: Set a minimum value for graph display
 - `max`: Set a maximum value for graph display
 

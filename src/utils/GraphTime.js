@@ -12,9 +12,14 @@ class GraphTime{
         return this
     }
 
+    setARGV(isARGV){
+        this.isARGV = isARGV
+        return this
+    }
+
     add(newData){
         this._getCurrentDate().map(currentData => {
-            this.data[currentData] = new GraphData(this.data[currentData], this.absolutValues)
+            this.data[currentData] = new GraphData(this.data[currentData], this.absolutValues, this.isARGV)
                                         .add(newData)
                                         .getJson()
         })
@@ -55,9 +60,10 @@ class GraphTime{
 }
 
 class GraphData{
-    constructor(data = {}, defaultValue = {}){
+    constructor(data = {}, defaultValue = {}, isARGV = false){
         this.data = data
         this.defaultValue = defaultValue
+        this.isARGV = isARGV
     }
 
     add(newData){
@@ -66,6 +72,9 @@ class GraphData{
                 this.data[k] += newData[k]
             else
                 this.data[k] = this._getDefaultValue(k) + newData[k]
+
+            if(this.isARGV)
+                this.data[k] = Math.round(this.data[k]/2)
         })
         return this
     }

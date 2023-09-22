@@ -30,6 +30,7 @@ class Graph{
         if(typeof newData !== 'object' || Array.isArray(newData)) throw 'Added data format cannot be added to chart'
         this.data = new GraphTime(this.data, this.absolutValues || {})
                         .setAbsolute(this.options.absolute)
+                        .setARGV(this.options.argv)
                         .add(newData)
                         .getResult()
 
@@ -84,6 +85,9 @@ class Graph{
     _validOptions(options){
         if(options.absolute === undefined)
             options.absolute = false
+
+        if(options.argv === undefined)
+            options.argv = false
     
         if(!['line', 'bar', 'polararea', 'doughnut', 'radar'].includes(options.type))
             options.type = 'line'
