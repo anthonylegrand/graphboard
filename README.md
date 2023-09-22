@@ -9,8 +9,7 @@ The development of this project is ongoing, new vertions are published every day
 
 Host your own dashboard and generate the graphics you want. You can also simply connect the extension to your express server to automatically generate server statistics.
 
-## Web dashboard preview
-![Default dashboard preview](dashboard.png)
+![Default dashboard preview](https://i.imgur.com/xf4CUkt.png)
 
 ## Installation & setup
 1. Run 
