@@ -19,7 +19,8 @@ class GraphTime{
 
     add(newData){
         this._getCurrentDate().map(currentData => {
-            this.data[currentData] = new GraphData(this.data[currentData], this.absolutValues, this.isARGV)
+            if(!currentData.startsWith('s-'))
+                this.data[currentData] = new GraphData(this.data[currentData], this.absolutValues, this.isARGV)
                                         .add(newData)
                                         .getJson()
         })

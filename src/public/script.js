@@ -43,7 +43,7 @@ function fetchGraphs(){
         childElements.sort((a, b) => {
             const priorityA = parseInt(a.getAttribute('data-priority') || '0', 10);
             const priorityB = parseInt(b.getAttribute('data-priority') || '0', 10);
-            return priorityA - priorityB;
+            return priorityB - priorityA;
         });
         childElements.forEach(child => charts_list.appendChild(child));
         

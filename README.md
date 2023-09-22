@@ -7,8 +7,10 @@ The development of this project is ongoing, new vertions are published every day
 ```
 <br/><br/>
 
-Self-host your own monitoring dashboard for your application. 
-Create your own statistics for your dashboard.
+Host your own dashboard and generate the graphics you want. You can also simply connect the extension to your express server to automatically generate server statistics.
+
+## Web dashboard preview
+![Default dashboard preview](dashboard.png)
 
 ## Installation & setup
 1. Run 
@@ -82,6 +84,10 @@ Graph options :
 - `type`: Change graph display type
     - **default**: "line"
     - **options**: [ 'line', 'bar', 'polararea', 'doughnut', 'radar' ]
+- `size`: Change the minimum width of the graphic on the page
+    - **default**: 1
+    - **options**: [ 1, 2, 3 ]
+- `priority`: Change the order of your graphics. Enter a value between 1 and 100. Charts are sorted by increasing priority. If you use the default express graphics, they have a priority of 50.
 - `absolute`: Does the value continue to increment infinitely? Or does it return to 0 every new minute?
     - **default**: false
 - `avrg`: Calculate the average of inserted data
@@ -89,3 +95,5 @@ Graph options :
 - `min`: Set a minimum value for graph display
 - `max`: Set a maximum value for graph display
 
+## Manage data files
+A graphsboard folder is automatically generated at the root of your project, with a .json file for each graph you generate. If you wish to delete a graphic, simply delete the .json file.

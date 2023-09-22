@@ -47,7 +47,7 @@ const middlewareWrapper = config => {
                 if(res.getHeader('x-content-type-options') === undefined)
                     Express_Graph.add({ answered: 1 })
                 Express_Status.add({ [res.statusCode]: 1 })
-                Express_Response_Time.add({ response: Date.now()-start_time_request })
+                Express_Response_Time.add({ ms: Date.now()-start_time_request })
             })
         }
         
