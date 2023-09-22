@@ -30,6 +30,18 @@ html{
 .jc-center{justify-content: center;}
 .ai-center{align-items: center;}
 
+#progress-bar{
+    width: 0%;
+    height: 3px;
+    background-color: var(--purple-stats-bg);
+    margin: 0;
+    transition: width 0s linear;
+}
+#progress-bar.full{
+    width: 100%;
+    transition: width 60s linear;
+}
+
 nav{
     background-color: var(--nav-bg-color);
     max-width: 20%;
@@ -136,7 +148,7 @@ div.warning{
     flex: 1;
     height: 200px;
     min-width: 25vw;
-    padding: 16px;
+    padding: 16px 16px 40px;
     border: 1px solid black;
     border-right-color: var(--purple-stats-bg);
     border-right-width: 7px;
@@ -146,6 +158,10 @@ div.warning{
 }
 #charts_list article:nth-child(4n+2),
 #charts_list article:nth-child(4n+3) { flex: 2; }
+
+#charts_list article.size-1{ flex: 1; }
+#charts_list article.size-2{ flex: 2; }
+#charts_list article.size-3{ flex: 3;min-width: 50vw; }
 
 #charts_list article>header{
     display: flex;
@@ -157,13 +173,10 @@ div.warning{
     font-weight: bold;
     margin-right: 25px;
 }
-#charts_list article>header i{
-    font-size: 15px;
-    color: var(--purple-stats-bg);
-}
 #charts_list article>header label{
     font-size: 16px;
-    color: #3C3C43;
+    font-weight: bold;
+    color: var(--purple-stats-bg);
 }
 #charts_list article>header>div,
 #charts_list article>header>div>div{ display: flex; }

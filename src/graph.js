@@ -12,12 +12,15 @@ let instances = []
 class Graph{
     constructor(title, options = {}){
         const existingInstance = instances.find(instance => instance.infos.title === title);
-        if(existingInstance)
+        if(existingInstance){
+            if(Object.keys(options) > 0)
+                existingInstance.options = {...existingInstance.options, ...this._validOptions(options)}
             return existingInstance
+        }
 
         this.infos = { title, displaySize: 1 }
-        this.options = this._validOptions(options)
         this._readFile()
+        this.options = this._validOptions({...this.options, ...options})
 
         instances.push(this);
         return this
@@ -54,7 +57,7 @@ class Graph{
                     writeJson[key] = this.data[key]
             })
 
-            fs.writeFileSync(this._getFilePath(), JSON.stringify({ ...this.getJSON(), data: writeJson }))
+            fs.writeFileSync(this._getFilePath(), JSON.stringify({ ...this.getJSON(), options: this.options, data: writeJson }))
             this.timeout = undefined
         }, 2000);
     }
@@ -66,7 +69,9 @@ class Graph{
         
         this.data = file?.data || {}
 
-        if(this.options.absolute)
+        this.options = this._validOptions({...file?.options, ...this.options})
+        
+        if(this.options?.absolute || false)
             this.absolutValues = file?.absolutValues
         
         return this
@@ -82,7 +87,13 @@ class Graph{
     
         if(!['line', 'bar', 'polararea', 'doughnut', 'radar'].includes(options.type))
             options.type = 'line'
-    
+
+        if(options.size === undefined || ![1,2,3].includes(options.size))
+            options.size = 1
+
+        if(options.priority === undefined || options.priority < 1)
+            options.priority = 1
+
         return options
     }
 }

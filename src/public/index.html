@@ -12,101 +12,41 @@
 
     <title>Graphsboard</title>
 </head>
-<body class="container">
+<body class="container col">
+    <hr id="progress-bar" />
     
-    <section class="container col" style="width: 70%;margin:10px 100px;gap:20px;">
-        <header class="container jc-sb ai-center">
-            <h2>AD</h2>
-            <input placeholder="Search" type="text" />
-        </header>
-
-        <div class="warning">
-            The development of this project is ongoing, new vertions are published every day. <br/>
-            The project was started on September 08, 2023.
-            Found all informations on this link: <a href="https://www.npmjs.com/package/graphsboard" target="_blank">graphsboard</a>
-        </div>
-
-        <section>
-            <!-- JS Generation -->
-            <div class="container jc-sb ai-center">
-                <h2>Statistiques</h2>
-                <form>
-                    <label for="time-select">Display graphiques :</label>
-                    <select name="time-select" id="time-select">
-                        <option value="m">Last minutes</option>
-                        <option value="h">Last hour</option>
-                        <option value="d">Last day</option>
-                    </select>
-                </form>
+    <div class="container">
+        <section class="container col" style="width: 100%;margin:10px 100px;gap:20px;">
+            <header class="container jc-sb ai-center">
+                <h2>AD</h2>
+                <input placeholder="Search" type="text" />
+            </header>
+    
+            <div class="warning">
+                The development of this project is ongoing, new vertions are published every day. <br/>
+                The project was started on September 22, 2023.
+                Found all informations on this link: <a href="https://www.npmjs.com/package/graphsboard" target="_blank">graphsboard</a>
             </div>
-            <div id="charts_list">
+    
+            <section>
                 <!-- JS Generation -->
-            </div>
+                <div class="container jc-sb ai-center">
+                    <h2>Statistiques</h2>
+                    <form>
+                        <label for="time-select">Display graphiques :</label>
+                        <select name="time-select" id="time-select">
+                            <option value="m">Last minutes</option>
+                            <option value="h">Last hour</option>
+                            <option value="d">Last day</option>
+                        </select>
+                    </form>
+                </div>
+                <div id="charts_list">
+                    <!-- JS Generation -->
+                </div>
+            </section>
         </section>
-    </section>
-
-    <nav class="container col jc-sb">
-        <div class="container col">
-            <h3>Notifications</h3>
-
-            <article class="badge warning">
-                <div class="badge">
-                    X
-                </div>
-                <div>
-                    <label>Voila un titre bien trop long pour cette petite case</label>
-                    <lore>Text description beaucoup trop long aussi !!</lore>
-                </div>
-            </article>
-            <article class="badge neutre">
-                <div class="badge">
-                    X
-                </div>
-                <div>
-                    <label>Voila un titre bien trop long pour cette petite case</label>
-                    <lore>Text description beaucoup trop long aussi !!</lore>
-                </div>
-            </article>
-            <article class="badge debug">
-                <div class="badge">
-                    X
-                </div>
-                <div>
-                    <label>Voila un titre bien trop long pour cette petite case</label>
-                    <lore>Text description beaucoup trop long aussi !!</lore>
-                </div>
-            </article>
-            <article class="badge error">
-                <div class="badge">
-                    X
-                </div>
-                <div>
-                    <label>Voila un titre bien trop long pour cette petite case</label>
-                    <lore>Text description beaucoup trop long aussi !!</lore>
-                </div>
-            </article>
-            <article class="badge sucess">
-                <div class="badge">
-                    X
-                </div>
-                <div>
-                    <label>Voila un titre bien trop long pour cette petite case</label>
-                    <lore>Text description beaucoup trop long aussi !!</lore>
-                </div>
-            </article>
-        </div>
-
-        <div class="container col">
-            <h3>Mobile Application</h3>
-            <a id="btn-mobile-android" class="container ai-center jc-center">
-                <label>Google Play</label>
-            </a>
-            <a id="btn-mobile-ios" class="container ai-center jc-center">
-                <label>App Store</label>
-            </a>
-        </div>
-    </nav>
-      
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>{{{script}}}</script>
 </body>

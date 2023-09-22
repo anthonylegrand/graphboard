@@ -57,12 +57,15 @@ Default config:
     path: '/graphsboard',
     ignorePaths: [ '/public', '/admin' ],
     port: 80,
+
+    expressGraph: true
 ```
 
 Recovered Data:
 - `path` : You can change the panel access path <br/>
 - `ignorePaths` : If you use Express, you can disable statistics for certain requests <br/>
 - `port` : You can change the server's exposure port <br/>
+- `expressGraph` : Automatically generate graphs for Express (Total Request and average request response status) <br/>
 
 ## How to use
 Simply add new graphics and data

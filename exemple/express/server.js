@@ -6,7 +6,8 @@ app.use(graphsboard.middleware())
 
 const graph = graphsboard.Graph('Total Users', {
     type: 'line',
-    absolute: true
+    absolute: true,
+    size: 3
 })
 
 app.get('/register', (req, res) => {

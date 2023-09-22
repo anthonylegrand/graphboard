@@ -36,13 +36,14 @@ const middlewareWrapper = config => {
                 res.json(result)
             }
         }else if(validatedConfig.expressGraph && !utils.pathContains(validatedConfig.ignorePaths, req.path)){
-            const Express_Graph = Graph('Express Requests')
+            const Express_Graph = Graph('Express Requests', {priority: 50, size: 2})
+            const Express_Status = Graph('Express Status', {type: 'doughnut', priority: 50, size: 1})
             Express_Graph.add({incoming: 1})
 
             res.on("finish", () => {
                 if(res.getHeader('x-content-type-options') === undefined)
                     Express_Graph.add({ answered: 1 })
-                Express_Graph.add({ [res.statusCode]: 1 })
+                Express_Status.add({ [res.statusCode]: 1 })
             })
         }
         
