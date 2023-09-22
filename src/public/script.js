@@ -45,7 +45,7 @@ function createGraphElement(key, json){
     const header_div = createElement('div')
     const header_div_div = createElement('div')
     const header_div_div_h5 = createElement('h5', [{innerHTML: key.replaceAll('_', ' ')}])
-    const header_div_p = createElement('p', [{innerHTML: 'option'}])
+    const header_div_option = createElement('button', [{innerHTML: 'Graphics option (in development)'}])
     
     const canvas = createElement('canvas', [{ id: 'chart-'+key }])
 
@@ -53,7 +53,7 @@ function createGraphElement(key, json){
     header.appendChild(header_div)
     header_div.appendChild(header_div_div)
     header_div_div.appendChild(header_div_div_h5)
-    header_div.appendChild(header_div_p)
+    header_div.appendChild(header_div_option)
 
     
     if(json.absolutValues !== undefined){

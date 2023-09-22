@@ -178,6 +178,14 @@ div.warning{
     font-weight: bold;
     color: var(--purple-stats-bg);
 }
+#charts_list article:hover>header button{display: initial;cursor: pointer;}
+#charts_list article>header button{
+    display: none;
+    border: 3px dotted var(--purple-stats-bg);
+    background-color: var(--badge-bg-color-warning);
+    border-radius: 5px;
+    padding: 2px 15px;
+}
 #charts_list article>header>div,
 #charts_list article>header>div>div{ display: flex; }
 #charts_list article>header>div{justify-content: space-between;}
