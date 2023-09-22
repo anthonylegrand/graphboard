@@ -34,7 +34,7 @@ Host your own dashboard and generate the graphics you want. You can also simply 
         console.log(`Express server is running : http://localhost/`)
     })
 ```
-3. Visit http://ServerIP/graphsboard
+3. Visit http://ServerIP:port/graphsboard
 
 Note: This plugin works on Node versions > 4.x
 
@@ -73,7 +73,7 @@ Simply add new graphics and data
 
 ```javascript
     const graphsboard = require('graphsboard')
-    const graph = graphsboard.graph('Total Users', {
+    const graph = graphsboard.Graph('Total Users', {
         type: 'line', // Default: 'line' - List : ['line', 'bar', 'polararea', 'doughnut', 'radar']
         absolute: true
     })

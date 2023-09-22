@@ -1,3 +1,5 @@
+const fetch = require("node-fetch");
+
 const pjson = require('./../../package.json');
 
 fetch('https://registry.npmjs.org/'+pjson.name)
