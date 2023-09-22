@@ -11,6 +11,19 @@ window.onload = () => {
 
     document.getElementById('time-select')
         .addEventListener('change', () => fetchGraphs())
+
+    document.getElementById('search_input')
+        .addEventListener('input', (e) => {
+            const input_name = e.target.value.toLocaleLowerCase()
+            
+            Array.from(charts_list.querySelectorAll('article')).map(el => {
+                const el_name = el.querySelector('header h5').innerHTML.toLocaleLowerCase()
+                if(el_name.includes(input_name) || input_name === '')
+                    el.style.display = 'block'
+                else
+                    el.style.display = 'none'
+            })
+        })
 }
 
 function fetchGraphs(){
