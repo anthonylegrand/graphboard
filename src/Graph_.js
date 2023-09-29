@@ -111,5 +111,9 @@ module.exports = (title, options) => {
 }
 
 module.exports.graphsList = () => {
-    return fs.readdirSync(path.join(ABSOLUTE_PATH, 'graphsboard'))
+    const dirname = path.join(ABSOLUTE_PATH, 'graphsboard')
+    if(!fs.existsSync(dirname))
+            fs.mkdirSync(dirname, { recursive: true })
+
+    return fs.readdirSync(dirname)
 }
