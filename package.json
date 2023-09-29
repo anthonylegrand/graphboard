@@ -1,6 +1,6 @@
 {
   "name": "graphsboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Real-time dashboard hosted locally",
   "main": "index.js",
   "keywords": [

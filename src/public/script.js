@@ -16,6 +16,11 @@ window.onload = () => {
         .addEventListener('input', (e) => {
             filterGraphs(e.target.value.toLocaleLowerCase())
         })
+
+    document.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Escape') 
+            openNav(true)
+    });
 }
 
 function filterGraphs(filter){
@@ -228,4 +233,10 @@ class DataLine{
             spanGaps: this.spanGaps
         }
     }
+}
+
+function openNav(closed = false){
+    const NAV = document.querySelector('nav')
+    if(NAV.className === 'show' || closed) NAV.className = ''
+    else NAV.className = 'show'
 }
