@@ -5,8 +5,13 @@ const Handlebars = require('handlebars')
 const validate = require('./utils/validate')
 const utils = require('./utils/utils')
 const Graph = require('./Graph')
+const Notification = require('./Notification')
 
 require('./utils/checkUpdate')
+
+global.ABSOLUTE_PATH = __dirname.includes('node_modules') 
+                        ? path.normalize(__dirname.split('node_modules')[0]) 
+                        : path.join(__dirname, '../')
 
 const middlewareWrapper = config => {
     const validatedConfig = validate(config)
@@ -28,12 +33,15 @@ const middlewareWrapper = config => {
                 res.send(render(data))
                 return
             }else if(req.method === 'POST'){
-                let result = {}
+                let graphs = {}
                 Graph.graphsList().map(graph => {
                     const graphTitle = graph.replace('.json', '')
-                    result[graphTitle] = Graph(graphTitle)._readFile().getJSON()
+                    graphs[graphTitle] = Graph(graphTitle)._readFile().getJSON()
                 })
-                res.json(result)
+
+                let notifications = Notification.getAll()
+
+                res.json({ graphs, notifications })
             }
         }else if(validatedConfig.expressGraph && !utils.pathContains(validatedConfig.ignorePaths, req.path)){
             const start_time_request = Date.now()
