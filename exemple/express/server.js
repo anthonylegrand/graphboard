@@ -21,4 +21,6 @@ app.get('/error', (req, res) => {
 
 app.listen(81, () => {
     console.log(`Express server is running : http://localhost/`)
+    
+    graphsboard.Notification('Express server is running : http://localhost/', 'Start at '+(new Date().toLocaleDateString()), { badge: 'sucess' })
 })

@@ -3,10 +3,6 @@ const path = require('path')
 
 const {GraphTime, GraphData} = require('./utils/GraphTime')
 
-const ABSOLUTE_PATH = __dirname.includes('node_modules') 
-                        ? path.normalize(__dirname.split('node_modules')[0]) 
-                        : path.join(__dirname, '../')
-
 let instances = []
 
 class Graph{
@@ -79,7 +75,7 @@ class Graph{
     }
 
     _getFilePath(){
-        return path.join(ABSOLUTE_PATH, 'graphsboard', this.infos.title.replaceAll(' ', '_')+'.json')
+        return path.join(global.ABSOLUTE_PATH, 'graphsboard', this.infos.title.replaceAll(' ', '_')+'.json')
     }
 
     _validOptions(options){
@@ -111,5 +107,9 @@ module.exports = (title, options) => {
 }
 
 module.exports.graphsList = () => {
-    return fs.readdirSync(path.join(ABSOLUTE_PATH, 'graphsboard'))
+    const dirname = path.join(global.ABSOLUTE_PATH, 'graphsboard')
+    if(!fs.existsSync(dirname))
+            fs.mkdirSync(dirname, { recursive: true })
+
+    return fs.readdirSync(dirname)
 }
