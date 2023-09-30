@@ -9,7 +9,7 @@ The development of this project is ongoing, new vertions are published every day
 
 Host your own dashboard and generate the graphics you want. You can also simply connect the extension to your express server to automatically generate server statistics.
 
-![Default dashboard preview](https://i.imgur.com/xf4CUkt.png)
+![Default dashboard preview](https://i.imgur.com/pezgnBK.gif)
 
 ## Installation & setup
 1. Run 
@@ -93,6 +93,23 @@ Graph options :
     - **Exemple**: Average query response time
 - `min`: Set a minimum value for graph display
 - `max`: Set a maximum value for graph display
+
+## Notifications
+Use the Notification system
+```javascript
+    const graphsboard = require('graphsboard')
+    
+    
+    graphsboard.Notification('Notification Title', 'This is description', 
+        {
+            badge: 'sucess'
+        }
+    )
+```
+Notifications options :
+- `badge`: Change the minimum width of the graphic on the page
+    - **default**: neutre
+    - **options**: [ neutre, warning, debug, error, sucess ]
 
 ## Manage data files
 A graphsboard folder is automatically generated at the root of your project, with a .json file for each graph you generate. If you wish to delete a graphic, simply delete the .json file.
