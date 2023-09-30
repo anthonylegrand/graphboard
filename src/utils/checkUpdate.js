@@ -1,18 +1,26 @@
 const fetch = require("node-fetch");
-
 const pjson = require('./../../package.json');
+const NPM_REGISTRY_URL = `https://registry.npmjs.org/${pjson.name}`;
 
-fetch('https://registry.npmjs.org/'+pjson.name)
-.then(res => res.json())
-.then(json => {
-    if(pjson.version === json['dist-tags']?.latest) return
-    if(pjson.version === json['dist-tags']?.development) return
+function displayUpdateMessage() {
+    console.log(`
+------------------[${pjson.name}]------------------
+You're not using the last version
+Do "npm update ${pjson.name}" to get the new features
+------------------------------------------------------
+    `);
+}
 
-    console.log(' ')
-    console.log('------------------['+pjson.name+']------------------')
-    console.log('You\'re not using the last version')
-    console.log('Do "npm update '+pjson.name+'" to get the new features')
-    console.log('------------------------------------------------------')
-    console.log(' ')
+fetch(NPM_REGISTRY_URL)
+.then(res => {
+    if (!res.ok) {
+        throw new Error('Failed to fetch the package info from npm registry');
+    }
+    return res.json();
 })
-.catch(err =>console.error('[ERROR] Graphsboard: Not Found fetch update'))
+.then(json => {
+    if (pjson.version !== json['dist-tags']?.latest && pjson.version !== json['dist-tags']?.development) {
+        displayUpdateMessage();
+    }
+})
+.catch(err => console.error(`[ERROR] Graphsboard: ${err.message}`));

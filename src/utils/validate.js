@@ -1,25 +1,31 @@
 const defaultConfig = require('./default-config')
 
-module.exports = config => {
-    if (!config) 
-      return defaultConfig
+const validatePath = (path) => {
+    if (typeof path !== 'string' || !path.startsWith('/')) {
+        throw new Error("The path value in the 'graphsboard' config must be a string and begin with /");
+    }
+    return path;
+}
 
-    if(typeof config.path !== 'string')
-        if(config.path.startsWith('/'))
-            config.path = defaultConfig.path
-        else
-            throw "The path value in the 'graphsboard' config must begin with /"
-    
-    if(!Array.isArray(config.ignorePaths))
-        config.ignorePaths = defaultConfig.ignorePaths
-    else
-        config.ignorePaths = config.ignorePaths.filter(el => typeof el === 'string')
+const validateIgnorePaths = (ignorePaths) => {
+    if (!Array.isArray(ignorePaths)) {
+        return defaultConfig.ignorePaths;
+    }
+    return ignorePaths.filter(el => typeof el === 'string');
+}
 
-    if(typeof config.port !== 'numeric')
-        config.port = defaultConfig.port
+const validatePort = (port) => {
+    if (typeof port !== 'number') {
+        return defaultConfig.port;
+    }
+    return port;
+}
 
-    if(config.expressGraph === undefined)
-        config.expressGraph = defaultConfig.expressGraph
-
-    return config
+module.exports = (config = {}) => {
+    return {
+        path: validatePath(config.path || defaultConfig.path),
+        ignorePaths: validateIgnorePaths(config.ignorePaths),
+        port: validatePort(config.port),
+        expressGraph: config.expressGraph ?? defaultConfig.expressGraph
+    }
 }
