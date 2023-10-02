@@ -99,7 +99,6 @@ Use the Notification system
 ```javascript
     const graphsboard = require('graphsboard')
     
-    
     graphsboard.Notification('Notification Title', 'This is description', 
         {
             badge: 'sucess'

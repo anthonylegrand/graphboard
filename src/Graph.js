@@ -110,6 +110,6 @@ module.exports.graphsList = () => {
     const dirname = path.join(global.ABSOLUTE_PATH, 'graphsboard')
     if(!fs.existsSync(dirname))
             fs.mkdirSync(dirname, { recursive: true })
-
-    return fs.readdirSync(dirname)
+        
+    return fs.readdirSync(dirname).filter(graph => graph !== 'Notifications.json')
 }
